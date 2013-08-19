@@ -23,7 +23,7 @@ Ext.define('generic.view.layout.TopToolbar', {
         //////////////////////////////////
         // custom variables
         //////////////////////////////////
-        
+
         /**
          * All buttons in the toolbar disabled, true - false
          */
@@ -80,5 +80,37 @@ Ext.define('generic.view.layout.TopToolbar', {
                 ]
             }
 		]
+    },
+
+    initialize : function () {
+        this.callParent();
+        this.registerListeners();
+    },
+
+    registerListeners : function(){
+        this.on( 'Module1Panel', function( config ){
+            console.log( 'Module1Panel', config );
+            this.setUIElements( config );
+        });
+
+        this.on( 'Module2Panel', function( config ){
+            console.log( 'Module2Panel', config );
+            this.setUIElements( config );
+        });
+
+        // growing ...
+    },
+
+    setUIElements : function( config ){
+        this.setToolbarTitle(config);
+        this.setButtonsStatus(config);
+    },
+
+    setToolbarTitle : function( config ){
+        console.log( 'setToolbarTitle', config );
+    },
+
+    setButtonsStatus : function( config ){
+        console.log( 'setButtonsStatus', config );
     }
 });

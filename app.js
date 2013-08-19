@@ -27,11 +27,11 @@ Ext.application({
 
     views : ['layout.MainContainer','layout.LeftContainer','layout.RightContainer'],
 
-    controllers : ['SlideViewCtrl','Module1Ctrl', 'Module2Ctrl'],
+    controllers : ['SlideViewCtrl','AppCtrl','Module1Ctrl', 'Module2Ctrl'],
 
     launch: function() {
         
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('generic.view.layout.MainContainer'));
+        Ext.Viewport.add(Ext.create('MainContainer'));
     }
 });
