@@ -65,29 +65,36 @@ Ext.define('generic.components.controller.ModuleCtrl',{
 	 * @return      newView instanciated
 	 * @fires       newXtype name with newXtypeConfig as parameter
 	 */
-	setUI : function ( newXtype, animation, newXtypeConfig, destroy ) {
+	setUI : function ( newXtype, initActions, animation, extraConfig, destroy ) {
 		
-		// save status
-
-
 		// destroy current view
 		if( destroy ){
+			// save status
+			this.getRightContainer().getActiveItem().saveFullStatus();
+			// destroy
 			this.getRightContainer().getActiveItem().destroy();			
+		} else {
+			// simply save xtype and current module (app ctrl keeps info about this (controls the menu list))
+			this.getRightContainer().getActiveItem().saveStatus(); 
 		}
 
 		// prepare new view
-			newXtypeConfig = Ext.apply(extraConfig, {
-				state: {}
-			});
+		newXtypeConfig = Ext.apply(extraConfig, {
+			state: {}
+		});
 
 		// instaciate new view
-		if( Ext.device.Device.platform == 'android' )
+		if( Ext.device.Device.platform == 'android' && Ext.device.Device.platform.version < 4 )
 			newView = Ext.create( newXtype, { animation : false, customCfg: newXtypeConfig } );
 		else 
 			newView = Ext.create( newXtype, { animation : animation, customCfg: newXtypeConfig } );
 
 		// fire event
 		this.fireEvent( newXtype, extraConfig );	// for example if we have to set some titlebar
+
+		// new view controller init actions
+		if( initActions )
+			this.getApplication().getController( newXtype + 'Ctrl').initActions(); // naming convention on view controller
 
 		// animate to new view
 		this.getRightContainer().setActiveItem( newView );
