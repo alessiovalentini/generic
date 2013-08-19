@@ -20,7 +20,10 @@ Ext.Loader.setPath({
 //</debug>
 
 Ext.application({
+    
     name: 'generic',
+
+    controllers : ['Module1Ctrl', 'Module2Ctrl'],
 
     launch: function() {
         
