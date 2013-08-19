@@ -1,0 +1,70 @@
+///////////////////////////////////////////// 
+// 4 Left side navigation
+///////////////////////////////////////////// 
+.slide, .nav-list {
+    -webkit-animation-duration: .200s;
+	-webkit-transition-timing-function: cubic-bezier(0.275, 0.080, 0.425, 0.855);
+}
+
+.slide {
+	z-index: 1;
+}
+
+///////////////////////////////////////////// 
+// Main view 
+///////////////////////////////////////////// 
+@-webkit-keyframes slideout {
+    from {
+		-webkit-transform: translateX(0px);
+	} 
+	to {
+		-webkit-transform: translateX(250px);
+	}
+}
+
+@-webkit-keyframes slidein {
+    from { 
+    	-webkit-transform: translateX(250px); 
+    }
+	to { 
+		-webkit-transform: translateX(0px); 
+	}
+}
+
+.slide.out {
+    -webkit-animation-name: slideout;
+    -webkit-transform: translateX(250px);
+}
+
+.slide.in {
+    -webkit-animation-name: slidein;
+    -webkit-transform: translateX(0px);
+}
+
+///////////////////////////////////////////// 
+// Nav menu view specific style
+/////////////////////////////////////////////
+
+// list
+.nav-list{
+    height: 100%;
+	background: black;
+	-webkit-box-shadow: inset -15px 0px 30px -15px rgba(0,0,0,1);
+	position: absolute !important;
+    left: 0;
+}
+
+// list item
+.nav-list .x-list-item {
+	color: grey;
+	border-bottom: 1px solid white !important;
+	border-top: 1px solid white !important;
+    /*border-bottom: 1px solid #000 !important;
+    // border-top: 1px solid rgb(213, 213, 213) !important;*/
+	font-size: 100%;
+}
+
+// pressed => not working
+.nav-list .x-list-item.x-stretched.x-list-item-tpl.x-list-item-relative.x-item-pressed{
+	background-color: red;
+}

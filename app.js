@@ -23,11 +23,15 @@ Ext.application({
     
     name: 'generic',
 
-    controllers : ['Module1Ctrl', 'Module2Ctrl'],
+    requires : ['Ext.data.Store'],
+
+    views : ['layout.MainContainer','layout.LeftContainer','layout.RightContainer'],
+
+    controllers : ['SlideViewCtrl','Module1Ctrl', 'Module2Ctrl'],
 
     launch: function() {
         
         // Initialize the main view
-        Ext.Viewport.add(Ext.create('generic.view.Main'));
+        Ext.Viewport.add(Ext.create('generic.view.layout.MainContainer'));
     }
 });
