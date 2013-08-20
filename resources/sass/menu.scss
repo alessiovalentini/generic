@@ -31,13 +31,25 @@
 	}
 }
 
+// new devices
 .slide.out {
     -webkit-animation-name: slideout;
     -webkit-transform: translateX(250px);
 }
 
+// new devices
 .slide.in {
     -webkit-animation-name: slidein;
+    -webkit-transform: translateX(0px);
+}
+
+// old android devices
+.slide.outNoAnimation {
+    -webkit-transform: translateX(250px);
+}
+
+// old android devices
+.slide.inNoAnimation {
     -webkit-transform: translateX(0px);
 }
 

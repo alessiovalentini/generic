@@ -69,10 +69,14 @@ Ext.define('generic.components.controller.ModuleCtrl',{
 		
 		// destroy current view
 		if( destroy ){
+
+			// if( this.getRightContainer().getActiveItem() )	// if for the restart of the app
 			// save status
 			this.getRightContainer().getActiveItem().saveFullStatus();
 			// destroy
 			this.getRightContainer().getActiveItem().destroy();			
+			// }
+			
 		} else {
 			// simply save xtype and current module (app ctrl keeps info about this (controls the menu list))
 			this.getRightContainer().getActiveItem().saveStatus(); 

@@ -45,13 +45,21 @@ Ext.define('generic.controller.SlideViewCtrl',{
 	 */
 	toggleSlide : function(){
 		var me = this,
-			mainEl;
+			mainEl, 
+			cssOutCls;
 
 		if( me.getRightContainer() ){
 		
 			mainEl = me.getRightContainer().element;
 
-			if (mainEl.hasCls('out')) {
+			// old androids optimization
+			if( Ext.device.platform === 'Android' && Ext.device.platform.version < 4 )
+				cssOutCls = 'outNoAnimation';
+			else 
+				cssOutCls = 'out';
+
+			// movement
+			if ( mainEl.hasCls( cssOutCls )) {
 				this.closeSlide()
 			} else {
 				this.openSlide()
@@ -65,10 +73,21 @@ Ext.define('generic.controller.SlideViewCtrl',{
 	openSlide : function () {
 		var me = this,
 			rightContainer = me.getRightContainer(),
-			mainEl = me.getRightContainer().element;
+			mainEl = me.getRightContainer().element,
+			cssInCls, cssOutCls;
 
-		if (!mainEl.hasCls('out'))
-			mainEl.removeCls('in').addCls('out')
+		// old androids optimization
+		if( Ext.device.platform === 'Android' && Ext.device.platform.version < 4 ){
+			cssInCls  = 'inNoAnimation';
+			cssOutCls = 'outNoAnimation'; 
+		} else {
+			cssInCls = 'in';
+			cssOutCls = 'out'; 
+		}
+
+		// movement
+		if ( !mainEl.hasCls( cssOutCls ) )
+			mainEl.removeCls( cssInCls ).addCls( cssOutCls );
 		
 		// mask on inside panel
 		// rightContainer.getActiveItem().setMasked( true );
@@ -81,10 +100,20 @@ Ext.define('generic.controller.SlideViewCtrl',{
 	closeSlide : function () {
 		var me = this,
 			rightContainer = me.getRightContainer(),
-			mainEl = me.getRightContainer().element
+			mainEl = me.getRightContainer().element,
+			cssInCls, cssOutCls;
 
-			if (!mainEl.hasCls('in'))
-				mainEl.removeCls('out').addCls('in')
+			// old androids optimization
+			if( Ext.device.platform === 'Android' && Ext.device.platform.version < 4 ){
+				cssInCls  = 'inNoAnimation';
+				cssOutCls = 'outNoAnimation'; 
+			} else {
+				cssInCls = 'in';
+				cssOutCls = 'out'; 
+			}
+
+			if (!mainEl.hasCls( cssInCls ) )
+				mainEl.removeCls( cssOutCls ).addCls( cssInCls );
 
 		// mask off inside panel
 		// if( rightContainer.getActiveItem() )	// for when we logout and destroy all the inners
@@ -99,9 +128,18 @@ Ext.define('generic.controller.SlideViewCtrl',{
 	isOpen : function(){
 	 	var me = this,
 			rightContainer = me.getRightContainer(),
-			mainEl = me.getRightContainer().element;
+			mainEl = me.getRightContainer().element,
+			cssOutCls;
 
-		if( mainEl.hasCls('out') )
+		// old androids optimization
+		if( Ext.device.platform === 'Android' && Ext.device.platform.version < 4 ){
+			cssOutCls = 'outNoAnimation'; 
+		} else {
+			cssOutCls = 'out'; 
+		}		
+
+		// answer
+		if( mainEl.hasCls( cssOutCls ) )
 			return true;
 		return false;
 	}
