@@ -7,7 +7,9 @@
 Ext.define('generic.view.layout.RightContainer', {
     extend   : 'Ext.Container',
     xtype    : 'RightContainer',
-    requires : ['generic.view.layout.TopToolbar'],
+    requires : [
+        'generic.view.layout.TopToolbar'
+    ],
 
     config : {
 
@@ -31,7 +33,13 @@ Ext.define('generic.view.layout.RightContainer', {
             {
                 xtype : 'TopToolbar',
                 docked: 'top'
-            },
+            }
+            // {
+            //     xtype: 'OneLevel'
+            // },
+            // {
+            //     xtype: 'CustomList'
+            // }
             ///////////////////////////////////////
 
             ///////////////////////////////////////
@@ -39,5 +47,11 @@ Ext.define('generic.view.layout.RightContainer', {
             ///////////////////////////////////////
 
     	],
+
+        listeners: {
+            painted: function() {
+                generic.app.getController('NavigationCtrl').pushView('CustomList');
+            }
+        }
     }
 });

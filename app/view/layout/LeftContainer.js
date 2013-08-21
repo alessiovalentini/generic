@@ -34,6 +34,11 @@ Ext.define('generic.view.layout.LeftContainer', {
 
         itemTpl   : new Ext.XTemplate('<span>{title}</span>'),
         
-        store : menuStore
+        store : menuStore,
+        listeners: {
+            itemtap: function() {
+                
+            }
+        }
 	}
 });

@@ -23,11 +23,11 @@ Ext.application({
     
     name: 'generic',
 
-    requires : ['Ext.data.Store'],
+    requires : ['Ext.data.Store', 'generic.overrides.Component'],
 
     views : ['layout.MainContainer','layout.LeftContainer','layout.RightContainer'],
 
-    controllers : ['SlideViewCtrl','AppCtrl','Module1Ctrl', 'Module2Ctrl'],
+    controllers : ['SlideViewCtrl','AppCtrl', 'Module1Ctrl', 'Module2Ctrl', 'NavigationCtrl', 'view.CustomListCtrl', 'view.OneLevelCtrl'],
 
     launch: function() {
         

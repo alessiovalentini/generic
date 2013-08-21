@@ -43,7 +43,8 @@ Ext.define('generic.controller.Module1Ctrl',{
 	
 	init : function(){
 		console.log('> Module1Ctrl init');		
-	},
+
+	}
 
 	//////////////////////////////////////////////
 	//	Methods

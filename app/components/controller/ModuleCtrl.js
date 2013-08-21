@@ -44,7 +44,7 @@ Ext.define('generic.components.controller.ModuleCtrl',{
 	//////////////////////////////////////////////
 	
 	init : function(){
-		console.log('> module ctrl init');		
+		console.log('> module ctrl init');
 	},
 
 	//////////////////////////////////////////////
@@ -65,49 +65,48 @@ Ext.define('generic.components.controller.ModuleCtrl',{
 	 * @return      newView instanciated
 	 * @fires       newXtype name with newXtypeConfig as parameter
 	 */
-	setUI : function ( newXtype, initActions, animation, extraConfig, destroy ) {
+	setUI : function ( cfg ) {
+		// newXtype, initActions, animation, extraConfig, destroy
+		/**  Sample config
+			{
+				xtype: 'CustomList',
+				animation: {},
+				initActions: {},
+				state: {},
+				config: {}
+			}
+		*/
 		
-		// destroy current view
-		if( destroy ){
-
-			// if( this.getRightContainer().getActiveItem() )	// if for the restart of the app
-			// save status
-			this.getRightContainer().getActiveItem().saveFullStatus();
-			// destroy
-			this.getRightContainer().getActiveItem().destroy();			
-			// }
-			
-		} else {
-			// simply save xtype and current module (app ctrl keeps info about this (controls the menu list))
-			this.getRightContainer().getActiveItem().saveStatus(); 
+		var container = this.getRightContainer();
+		var cmpConfig = Ext.apply(cfg.config ? cfg.config : {}, {state: cfg.state});
+		if (cfg.animation === false) {
+			cmpConfig.showAnimation = false;
 		}
 
-		// prepare new view
-		newXtypeConfig = Ext.apply(extraConfig, {
-			state: {}
-		});
-
 		// instaciate new view
-		if( Ext.device.Device.platform == 'android' && Ext.device.Device.platform.version < 4 )
-			newView = Ext.create( newXtype, { animation : false, customCfg: newXtypeConfig } );
-		else 
-			newView = Ext.create( newXtype, { animation : animation, customCfg: newXtypeConfig } );
+		newView = Ext.create(cfg.xtype, cmpConfig);
 
 		// fire event
-		this.fireEvent( newXtype, extraConfig );	// for example if we have to set some titlebar
+		this.fireEvent(cfg.xtype, cfg);	// for example if we have to set some titlebar
 
+		if (Ext.device && Ext.device.Device.platform == 'android' && Ext.device.Device.platform.version < 4) {
+			// container.setActiveItem(newView, false);
+			container.getLayout().setAnimation(false);
+		} else {
+			container.getLayout().setAnimation(cfg.animation);
+		}
+
+		container.setActiveItem(newView);
+
+		var ctrl = this.getApplication().getController( 'view.' + cfg.xtype + 'Ctrl');
 		// new view controller init actions
-		if( initActions )
-			this.getApplication().getController( newXtype + 'Ctrl').initActions(); // naming convention on view controller
+		if (ctrl && ctrl.initView) {
 
-		// animate to new view
-		this.getRightContainer().setActiveItem( newView );
+			ctrl.initView(newView);
+			// this.getApplication().getController( cfg.xtype + 'Ctrl').initView(); // naming convention on view controller
+		}
 
 		return newView;
-	},
-
-	//////////////////////////////////////////////
-	//	Service Methods
-	//////////////////////////////////////////////
+	}
 
 })
